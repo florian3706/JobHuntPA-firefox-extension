@@ -1,0 +1,7 @@
+dist/
+node_modules/
+tests/out/
+.DS_Store
+*.zip
+*.pem
+web-ext-artifacts/

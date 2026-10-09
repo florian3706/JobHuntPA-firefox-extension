@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "JobHuntPA",
+  "version": "1.0.0",
+  "description": "Add the page you are viewing to your own JobHuntPA server, as a job or as a company source.",
+  "icons": { "16": "icons/icon-16.png", "32": "icons/icon-32.png", "48": "icons/icon-48.png", "128": "icons/icon-128.png" },
+  "action": {
+    "default_title": "Add to JobHuntPA",
+    "default_popup": "popup/popup.html",
+    "default_icon": { "16": "icons/icon-16.png", "32": "icons/icon-32.png" }
+  },
+  "options_ui": { "page": "options/options.html", "open_in_tab": true },
+  "background": { "scripts": ["background.js"], "type": "module" },
+  "permissions": ["activeTab", "scripting", "storage"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "jobhuntpa@florian3706.github.io",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": { "required": ["none"] }
+    },
+    "gecko_android": { "strict_min_version": "142.0" }
+  }
+}
