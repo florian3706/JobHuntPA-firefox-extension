@@ -54,8 +54,10 @@ The manifest's `description` (shown in `about:addons`):
 >   you the jobs it finds there before anything is saved.
 >
 > **What it sends, and to whom.** The add-on sends what it reads only to the JobHuntPA server address you enter, and
-> only when you open its popup and use it: the job it read from the page (opening the popup on a job ad already sends
-> it, to check whether JobHuntPA has it), the job cards of a results page when you press *Add jobs*, the page's
+> only when you open its popup or press one of its buttons: the job it read from the page (opening the popup on any
+> web page except a page of search results it recognises already sends what it read there, as a job, to check whether
+> JobHuntPA has it; on a page that is not a job ad, the description is the visible text of the page's main part or
+> whole page; nothing is saved by that), the job cards of a results page when you press *Add jobs*, the page's
 > address, the text you selected, and, when you ask JobHuntPA to work a page out, a trimmed outline of the page
 > (element names, a few attributes and short samples of text). Your extension key goes with each request, to the
 > server that issued it. It never sends the page's HTML, scripts, styles, cookies or anything you typed into the
@@ -82,8 +84,8 @@ accepts them by installing):
 
 | Data type | What the add-on transmits, and only to the user's own JobHuntPA server |
 | --- | --- |
-| `websiteContent` | The job read from the page (on opening the popup on a job ad, and on *Save job*), the job cards the user ticked on a results page, the text the user selected, and the page's trimmed outline when the user asks JobHuntPA to work the page out. |
-| `browsingActivity` | The address of the page being added or worked out (and its canonical address), the addresses of the ticked jobs, and a site's name (such as `jobs.example.org`) to look up whether JobHuntPA has a layout saved for it. |
+| `websiteContent` | The job read from the page (on opening the popup on any page except a page of search results, whether or not it is a job ad, and on *Save job*; on a page without a description element the add-on recognises, its description is the visible text of the page's main part or whole page), the job cards the user ticked on a results page, the text the user selected, and the page's trimmed outline when the user asks JobHuntPA to work the page out. |
+| `browsingActivity` | The address of the page the popup is opened on, added or worked out (and its canonical address), the addresses of the ticked jobs, and a site's name (such as `jobs.example.org`) to look up whether JobHuntPA has a layout saved for it. |
 | `authenticationInfo` | The extension key the user pasted, sent as the bearer token of every request, only to the JobHuntPA server that issued it. |
 
 Nothing else is transmitted: no `technicalAndInteraction` data (no usage statistics, crash or error reports), no

@@ -110,7 +110,8 @@ Everything goes **only to the JobHuntPA server you connected**, with the extensi
 cookies. There are no analytics, no telemetry, no ads and no third parties; the extension talks to no other server.
 The full statement, with every request, is [`store/privacy.md`](store/privacy.md). In short:
 
-- **Opening the popup** checks the key. On a job ad it also sends the job the extension read, to ask whether JobHuntPA
+- **Opening the popup** checks the key. Opening it on a web page (any page except a page of search results it
+  recognises, whether or not the page is a job ad) also sends what it read there, as a job, to ask whether JobHuntPA
   already has it (nothing is saved by that): the page address, the job's title, company, location, salary, employment
   type, work mode and posting date, and the job description as plain text. The description is the page's own job
   description where the extension finds one (the page's job data, or the description element of a site it knows);
@@ -129,20 +130,21 @@ The full statement, with every request, is [`store/privacy.md`](store/privacy.md
   `aria-label`, `href` without its query or fragment, `datetime`, `title` and the `data-testid` / `data-test` /
   `data-qa` / `data-automation` / `data-cy` test names, each at most 200 characters) and a sample of its own text (at
   most 100 characters), plus the page's title; at most 2,000 parts, 60 levels and 200,000 bytes. It never holds the
-  page's HTML, scripts, styles, frames, comments, anything of the page's head, anything hidden, the insides of an SVG,
-  or the text of form fields and editable areas. **Use this layout** sends the layout (selectors and attribute names
-  only). Your JobHuntPA sends the outline to the AI provider you set up in it and drops it with the request; it is
-  never stored or logged.
+  page's HTML, scripts, styles, frames, comments, anything of the page's head, anything marked hidden (the `hidden`
+  attribute, `aria-hidden` or `display: none`), the insides of an SVG, or the text of form fields and editable areas.
+  **Use this layout** sends the layout (selectors and attribute names only). Your JobHuntPA sends the outline to the
+  AI provider you set up in it and drops it with the request; it is never stored or logged.
 - **Add source** sends the address, your label and, when JobHuntPA worked one out, its layout for the page.
 
 **Never sent:** the page's HTML, its scripts, styles and script data, its cookies, what you type into its forms,
 other tabs, your browsing history, or anything while the popup is closed.
 
 **What Firefox shows.** Because the data goes outside the browser (to your own server), the manifest declares it in
-`data_collection_permissions`, as addons.mozilla.org requires: website content (the job, the cards, your selection,
-the outline), browsing activity (the addresses of the pages you add or have worked out, a site's name) and
-authentication information (the extension key, sent only to the server that issued it). Firefox lists these when you
-install the add-on. None of it goes to the developer or anyone else.
+`data_collection_permissions`, as addons.mozilla.org requires: website content (the job read from the page you open
+the popup on, the cards, your selection, the outline), browsing activity (the addresses of the pages you open the
+popup on, add or have worked out, a site's name) and authentication information (the extension key, sent only to the
+server that issued it). Firefox lists these when you install the add-on. None of it goes to the developer or anyone
+else.
 
 **Kept in the browser** (`storage.local`, never synced): the server address, the key, the chosen workspace, your
 workspaces' names, and the key's name and expiry date. Nothing about the pages you visit is kept.
