@@ -57,16 +57,17 @@ The manifest's `description` (shown in `about:addons`):
 > **What it sends, and to whom.** The add-on sends what it reads only to the JobHuntPA server address you enter, and
 > only when you open its popup or options page or press one of their buttons. Opening the popup on a web page, whether
 > or not it is a job ad (any page except a page of search results the extension recognises, which so far means SEEK's,
-> that shows no job of its own; when a results page also shows one, such as a job open beside the list in SEEK's split
-> view or a job in the page's job data, that job is sent at once as on any other page), sends what the extension read
-> there to your JobHuntPA server at once, before you edit anything, to check whether the job is already saved: the
-> page's address, the job's title and details, and a description that may be the visible text of the page's main part or
-> of the whole page. Nothing is saved by that; **Save job** sends the job with your edits. On a page of search results
-> it sends the job cards you tick when you press *Add jobs*, and when you ask JobHuntPA to work a page out, a trimmed
-> outline of the page (element names, a few attributes and short samples of text). Your extension key goes with each
-> request, to the server that issued it. It never sends the page's HTML, scripts or styles, cookies, or the values of
-> the page's form fields (what you type into inputs, text areas and lists). The developer receives nothing: there are no
-> analytics, no ads, no tracking and no third parties. The full privacy statement is at <privacy statement link>.
+> that shows no job of its own, where what it read is sent only once you open the **Add job** tab; when a results page
+> also shows one, such as a job open beside the list in SEEK's split view or a job in the page's job data, that job is
+> sent at once as on any other page), sends what the extension read there to your JobHuntPA server at once, before you
+> edit anything, to check whether the job is already saved: the page's address, the job's title and details, and a
+> description that may be the visible text of the page's main part or of the whole page. Nothing is saved by that;
+> **Save job** sends the job with your edits. On a page of search results it sends the job cards you tick when you press
+> *Add jobs*, and when you ask JobHuntPA to work a page out, a trimmed outline of the page (element names, a few
+> attributes and short samples of text). Your extension key goes with each request, to the server that issued it. It
+> never sends the page's HTML, scripts or styles, cookies, or the values of the page's form fields (what you type into
+> inputs, text areas and lists). The developer receives nothing: there are no analytics, no ads, no tracking and no
+> third parties. The full privacy statement is at <privacy statement link>.
 >
 > **You need JobHuntPA** (free, open source, for Windows, macOS and Linux): install it, then in JobHuntPA open
 > Settings, Browser extension, Connect a browser extension, and paste the server address and key it shows into the
@@ -88,7 +89,7 @@ accepts them by installing):
 
 | Data type | What the add-on transmits, and only to the user's own JobHuntPA server |
 | --- | --- |
-| `websiteContent` | The job read from a page the user opens the popup on, sent as soon as the popup opens, whether or not the page is a job ad (any page except a page of search results the extension recognises, which so far means SEEK's, that shows no job of its own; when a results page also shows one, such as a job open beside the list in SEEK's split view or a job in the page's job data, that job is sent at once as on any other page), and again on *Read page again*, on a workspace switch and on *Save job*; its description is the text the user selected, else the page's own job description, else the visible text of the page's main part or whole page. Also the job cards the user ticked on a results page, and the page's trimmed outline when the user asks JobHuntPA to work the page out. |
+| `websiteContent` | The job read from a page the user opens the popup on, sent as soon as the popup opens, whether or not the page is a job ad (any page except a page of search results the extension recognises, which so far means SEEK's, that shows no job of its own, where it is sent only once the user opens the *Add job* tab; when a results page also shows one, such as a job open beside the list in SEEK's split view or a job in the page's job data, that job is sent at once as on any other page), and again on *Read page again*, on a workspace switch and on *Save job*; its description is the text the user selected, else the page's own job description, else the visible text of the page's main part or whole page. Also the job cards the user ticked on a results page, and the page's trimmed outline when the user asks JobHuntPA to work the page out. |
 | `browsingActivity` | The address of the page the popup is opened on, added or worked out (and its canonical address), the addresses of the ticked jobs, and a site's name (such as `jobs.example.org`) to look up whether JobHuntPA has a layout saved for it. |
 | `authenticationInfo` | The extension key the user pasted, sent as the bearer token of every request, only to the JobHuntPA server that issued it. |
 
