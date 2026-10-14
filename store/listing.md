@@ -3,7 +3,8 @@
 Drafts for Firefox Add-ons (addons.mozilla.org, AMO). Publishing is the maintainer's step; copy the parts below into
 the AMO developer hub's form. The privacy statement is in [`privacy.md`](privacy.md) (the same text as in the Chrome
 repository): paste it into AMO's privacy policy field, or host it and link to it. The Chrome Web Store drafts are in
-the Chrome repository's `store/listing.md`; the description and the reasons for the permissions are the same.
+the Chrome repository's `store/listing.md`; the paragraph on what opening the popup sends is word for word the same
+there, in the README and in the privacy statement, and so are the reasons for the permissions.
 
 Everything here describes version 1.3.0. Check it again when the permissions or what the extension sends change.
 
@@ -54,14 +55,16 @@ The manifest's `description` (shown in `about:addons`):
 >   you the jobs it finds there before anything is saved.
 >
 > **What it sends, and to whom.** The add-on sends what it reads only to the JobHuntPA server address you enter, and
-> only when you open its popup or press one of its buttons: the job it read from the page (opening the popup on any
-> web page except a page of search results it recognises already sends what it read there, as a job, to check whether
-> JobHuntPA has it; on a page that is not a job ad, the description is the visible text of the page's main part or
-> whole page; nothing is saved by that), the job cards of a results page when you press *Add jobs*, the page's
-> address, the text you selected, and, when you ask JobHuntPA to work a page out, a trimmed outline of the page
-> (element names, a few attributes and short samples of text). Your extension key goes with each request, to the
-> server that issued it. It never sends the page's HTML, scripts, styles, cookies or anything you typed into the
-> page's forms. The developer receives nothing: there are no analytics, no ads, no tracking and no third parties.
+> only when you open its popup or press one of its buttons. Opening the popup on a web page, whether or not it is a
+> job ad (any page except a page of search results the extension recognises), sends what the extension read there to
+> your JobHuntPA server at once, before you edit anything, to check whether the job is already saved: the page's
+> address, the job's title and details, and a description that may be the visible text of the page's main part or of
+> the whole page. Nothing is saved by that; **Save job** sends the job with your edits. On a page of search results it
+> sends the job cards you tick when you press *Add jobs*, and when you ask JobHuntPA to work a page out, a trimmed
+> outline of the page (element names, a few attributes and short samples of text). Your extension key goes with each
+> request, to the server that issued it. It never sends the page's HTML, scripts or styles, cookies, or anything you
+> typed into the page's forms. The developer receives nothing: there are no analytics, no ads, no tracking and no
+> third parties.
 > The full privacy statement is at <privacy statement link>.
 >
 > **You need JobHuntPA** (free, open source, for Windows, macOS and Linux): install it, then in JobHuntPA open
@@ -84,7 +87,7 @@ accepts them by installing):
 
 | Data type | What the add-on transmits, and only to the user's own JobHuntPA server |
 | --- | --- |
-| `websiteContent` | The job read from the page (on opening the popup on any page except a page of search results, whether or not it is a job ad, and on *Save job*; on a page without a description element the add-on recognises, its description is the visible text of the page's main part or whole page), the job cards the user ticked on a results page, the text the user selected, and the page's trimmed outline when the user asks JobHuntPA to work the page out. |
+| `websiteContent` | The job read from a page the user opens the popup on, sent as soon as the popup opens, whether or not the page is a job ad (any page except a page of search results the extension recognises), and again on *Read page again*, on a workspace switch and on *Save job*; its description is the text the user selected, else the page's own job description, else the visible text of the page's main part or whole page. Also the job cards the user ticked on a results page, and the page's trimmed outline when the user asks JobHuntPA to work the page out. |
 | `browsingActivity` | The address of the page the popup is opened on, added or worked out (and its canonical address), the addresses of the ticked jobs, and a site's name (such as `jobs.example.org`) to look up whether JobHuntPA has a layout saved for it. |
 | `authenticationInfo` | The extension key the user pasted, sent as the bearer token of every request, only to the JobHuntPA server that issued it. |
 
@@ -114,7 +117,7 @@ server's address.
 | `activeTab` | Gives the add-on the page in the current tab, only when you open the popup on it. Used to read the job (or a results page's job cards) from that page, to build the page's trimmed outline when you ask JobHuntPA to work the page out, and to read the job with a site's saved layout. No other tab is ever read. |
 | `scripting` | Runs three small functions of the add-on in that tab (`scripting.executeScript`): `readPage` (the page's address, title, a few meta values, structured job data, the job description's text, your text selection; on a results page, what each job card shows), `readOutline` (the trimmed outline, built with DOM functions; no HTML is read out) and `readMapped` (a saved layout applied with `querySelector`, `getAttribute` and `textContent`/`innerText` only). Nothing is ever injected into a page you didn't open the popup on, and nothing changes the page. |
 | `storage` | Keeps the setup in `storage.local` on this device (never synced): your JobHuntPA server's address, the extension key, the chosen workspace, the list of your workspaces' names, and the key's name and expiry date. Site layouts are not kept in the browser: they live in JobHuntPA. |
-| Optional host permissions `http://*/*`, `https://*/*` (`optional_host_permissions`) | Lets the add-on call your JobHuntPA server's API. The add-on asks Firefox for the **one origin you enter** (for example `http://127.0.0.1:8000/*`) when you press *Connect* (`permissions.request`, inside that click); Firefox shows the question and you allow it or not. Nothing else is ever requested. Since the address is yours (a home computer, a Raspberry Pi, a LAN address or an https name), it can't be listed in the manifest in advance. *Reset*, or connecting to another address, withdraws the permission again (`permissions.remove`). |
+| Optional host permissions `http://*/*`, `https://*/*` (`optional_host_permissions`) | Lets the add-on call your JobHuntPA server's API. The add-on asks Firefox for the **one origin you enter** (for example `http://127.0.0.1:8000/*`) when you press *Connect* (`permissions.request`, inside that click); Firefox shows the question and you allow it or not. Nothing else is ever requested. Since the address is yours (`http://127.0.0.1:8000` on the same computer, or the `https://` address that Tailscale's `serve` or a reverse proxy on JobHuntPA's computer gives it for your other devices), it can't be listed in the manifest in advance. *Reset*, or connecting to another address, withdraws the permission again (`permissions.remove`). |
 
 ## Notes to reviewer
 
