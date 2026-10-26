@@ -39,8 +39,17 @@ Free software under the GNU General Public License, version 3 only (`GPL-3.0-onl
   layout, when one was needed, is saved with the source). Another address is added as before. **Test** shows how many
   postings a source has and a few samples.
 - **Settings** (the button at the top of the popup): shows the server the browser is connected to, the name
-  of its key and how long the key works, with **Check connection**, **Reconnect** (opens the options page to
-  connect again, with the saved key or a new one) and **Reset** (forgets the whole setup).
+  of its key, how long the key works and the theme it paints, with **Check connection** and **Reconnect** (opens the
+  options page to connect again, with the saved key or a new one). **Reset** (forgets the whole setup) is on the
+  options page only, since 1.4.0, so it is never one click away from the popup's main screen. The popup warns under
+  its header when the key has a week or less left.
+- **The look follows JobHuntPA** (since 1.4.0): the popup and the options page are drawn in the app's own themes
+  (Ubuntu's Vanilla framework, as in JobHuntPA's redesign) and paint the theme chosen for your account in JobHuntPA
+  (Settings, Theme): System follows your device between Vanilla Light and Vanilla Dark, and every other theme, from
+  Catppuccin to the colour-vision ones, looks as it does in the app. There is no theme setting in the extension: the
+  server tells it the account's theme each time the popup opens, and the last one stays while you are offline. The
+  Dyslexia themes keep their spacing but use your system's font, because the extension loads nothing from the
+  network. With a JobHuntPA from before this came in, the popup stays in Vanilla Dark, the app's default.
 
 **The AI work is done by your JobHuntPA, never by the extension.** The extension holds no AI key and never talks to an
 AI provider: it sends the page's outline to your own JobHuntPA server, which asks the AI it is set up with and checks
@@ -60,7 +69,7 @@ fetches anything on a job site by itself.
   understands the `data_collection_permissions` manifest key that addons.mozilla.org requires.
 
 The Chrome version, with the same code, is
-[JobHuntPA-chrome-extension](https://github.com/florian3706/JobHuntPA-chrome-extension). This is version 1.3.0.
+[JobHuntPA-chrome-extension](https://github.com/florian3706/JobHuntPA-chrome-extension). This is version 1.4.0.
 
 ## Install
 
@@ -179,12 +188,12 @@ workspaces' names, and the key's name and expiry date. Nothing about the pages y
 | --- | --- |
 | `activeTab` | Read the page in the current tab, only when you open the popup. |
 | `scripting` | Run the small functions that read the job out of the page in the current tab (its address, title, structured job data, the job description's text and your text selection; on a page of search results, what each job card shows), build the page's outline when you ask JobHuntPA to work a page out, and read the job with a site's saved layout. |
-| `storage` | Keep the setup in `storage.local` (never synced): the server address, the key, the chosen workspace, your workspaces' names, and the key's name and expiry date. Nothing about the pages you visit, and no site layouts (those live in JobHuntPA). |
+| `storage` | Keep the setup in `storage.local` (never synced): the server address, the key, the chosen workspace, your workspaces' names, the key's name and expiry date, and the name of your account's theme. Nothing about the pages you visit, and no site layouts (those live in JobHuntPA). |
 | optional hosts `http://*/*`, `https://*/*` (`optional_host_permissions`) | Requested at runtime for **your server's address only**, when you press Connect. Nothing else is ever requested. |
 
-There is no `<all_urls>` host permission, no content script on every page, no remote code, no analytics. Version 1.3.0
-asks for no new permission: the outline and the saved layouts use the same `activeTab` and `scripting` as reading a
-job. `activeTab`, `scripting` and `storage` add no line to Firefox's installation prompt; the site permission is
+There is no `<all_urls>` host permission, no content script on every page, no remote code, no analytics. Versions 1.3.0 and 1.4.0
+ask for no new permission: the outline and the saved layouts use the same `activeTab` and `scripting` as reading a
+job, and the theme comes with the status answer the popup already fetches. `activeTab`, `scripting` and `storage` add no line to Firefox's installation prompt; the site permission is
 asked for when you press Connect. The reasons for each permission, as given to the store, are in
 [`store/listing.md`](store/listing.md).
 
@@ -220,6 +229,10 @@ layout applied to the page), `lib/extract.js` the turning of that into the job o
 `popup/` and `options/` the UI. The contract with JobHuntPA is Part 8 of `docs/design/open-source.md` in the app's
 repository.
 
+- `css/themes.css` and `fonts/` are copies of the app's `frontend/themes.css` and `frontend/fonts/` (only the font
+  paths differ); `scripts/sync_themes.sh /path/to/JobHuntPA` refreshes them when the app's themes change. `css/base.css`
+  draws the app's Vanilla components in those themes' slots; `lib/theme.js` applies the theme the server sends with the
+  status (`theme` in `GET /api/extension/status`) and `lib/theme-boot.js` paints the stored one before a page shows.
 - Unit tests (`tests/extract.test.mjs`) and end-to-end tests with a mock server (and how to run them against a real
   server) are in the Chrome repository
   ([JobHuntPA-chrome-extension](https://github.com/florian3706/JobHuntPA-chrome-extension), `tests/`); the

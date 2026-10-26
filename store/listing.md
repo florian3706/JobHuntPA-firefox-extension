@@ -6,7 +6,7 @@ repository): paste it into AMO's privacy policy field, or host it and link to it
 the Chrome repository's `store/listing.md`; the paragraph on what opening the popup sends is word for word the same
 there, in the README and in the privacy statement, and so are the reasons for the permissions.
 
-Everything here describes version 1.3.0. Check it again when the permissions or what the extension sends change.
+Everything here describes version 1.4.0. Check it again when the permissions or what the extension sends change.
 
 ## Name and summary
 
@@ -53,6 +53,8 @@ The manifest's `description` (shown in `about:addons`):
 >   add-on holds no AI key and talks to no AI service.
 > - **Add a careers page as a source** that JobHuntPA's searches read. JobHuntPA first reads the page itself and shows
 >   you the jobs it finds there before anything is saved.
+>
+> The popup looks like your JobHuntPA: it paints the theme you chose in the app, light or dark.
 >
 > **What it sends, and to whom.** The add-on sends what it reads only to the JobHuntPA server address you enter, and
 > only when you open its popup or options page or press one of their buttons or pick another workspace in the popup.
@@ -107,7 +109,7 @@ the browser); it matches the *Authentication information* box ticked in the Chro
 
 The manifest asks for `activeTab`, `scripting` and `storage`, and for the optional host permissions `http://*/*` and
 `https://*/*`. There is no `<all_urls>` or other host permission granted at install, no content script on every page,
-no background work on pages and no remote code. 1.3.0 asks for no permission that 1.2.0 didn't.
+no background work on pages and no remote code. 1.3.0 and 1.4.0 ask for no permission that 1.2.0 didn't.
 
 What Firefox shows the user: `activeTab`, `scripting` and `storage` don't add a line to the installation prompt, so at
 install it shows only the data the add-on transmits (above). The site permission is asked for later, when the user
